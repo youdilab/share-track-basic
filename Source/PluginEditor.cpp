@@ -10,12 +10,20 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-YoudiShareAudioProcessorEditor::YoudiShareAudioProcessorEditor (YoudiShareAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+YoudiShareAudioProcessorEditor::YoudiShareAudioProcessorEditor(YoudiShareAudioProcessor& p)
+    : AudioProcessorEditor(&p)
+    , audioProcessor(p)
+    , btnIsMain(text::txtIsMain)
+    , btnMute(text::txtIsMute)
+    , sldVolMain(juce::Slider::SliderStyle::Rotary, juce::Slider::TextEntryBoxPosition::TextBoxBelow)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (400, 300);
+    setSize (constants::width, constants::height);
+
+    addAndMakeVisible(btnIsMain);
+    addAndMakeVisible(btnMute);
+    addAndMakeVisible(sldVolMain);
 }
 
 YoudiShareAudioProcessorEditor::~YoudiShareAudioProcessorEditor()
@@ -33,4 +41,7 @@ void YoudiShareAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+    btnIsMain.setBounds(20,20,150,30);
+    btnMute.setBounds(20, 70, 150, 30);
+    sldVolMain.setBounds(20, 50, 140, 140);
 }

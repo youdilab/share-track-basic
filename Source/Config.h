@@ -34,3 +34,17 @@ namespace parameters
     static const audioParameterBool isMain{"isMain","Main",false};
     static const audioParameterBool isMute{"isMute", "Mute", false};
 }
+
+namespace constants
+{    
+    static const int height{200};
+    static const int width{ 320 };
+}
+
+namespace text
+{
+    static const juce::String txtIsMain{"Main"};
+    static const juce::String txtIsMute{"Mute"};
+    static const juce::String txtVolMain{"Volume"};
+}
+

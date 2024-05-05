@@ -29,5 +29,9 @@ private:
     // access the processor object that created it.
     YoudiShareAudioProcessor& audioProcessor;
 
+    juce::ToggleButton btnIsMain;
+    juce::ToggleButton btnMute;
+    juce::Slider sldVolMain;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (YoudiShareAudioProcessorEditor)
 };
