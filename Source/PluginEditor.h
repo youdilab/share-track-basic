@@ -44,16 +44,5 @@ private:
 
     void buttonClicked(juce::Button*) override;
 
-    //Parameter management
-    //For reading parameter value
-    std::atomic<float>* paramReadIsMain = nullptr;
-    std::atomic<float>* paramReadIsMute = nullptr;
-    std::atomic<float>* paramReadVolMain = nullptr;
-
-    //For updating parameter value
-    juce::RangedAudioParameter* paramIsMain = nullptr;
-    juce::RangedAudioParameter* paramIsMute = nullptr;
-    juce::RangedAudioParameter* paramVolMain = nullptr;
-
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (YoudiShareAudioProcessorEditor)
 };

@@ -22,6 +22,12 @@ YoudiShareAudioProcessor::YoudiShareAudioProcessor()
                        )
 #endif
     ,parameters(*this,nullptr,"APVTS",createParameterLayout())
+    , paramIsMain(parameters.getParameter(parameters::isMain.id))
+    , paramIsMute(parameters.getParameter(parameters::isMute.id))
+    , paramVolMain(parameters.getParameter(parameters::volMain.id))
+    , paramReadIsMain(parameters.getRawParameterValue(parameters::isMain.id))
+    , paramReadIsMute(parameters.getRawParameterValue(parameters::isMute.id))
+    , paramReadVolMain(parameters.getRawParameterValue(parameters::volMain.id))
 {
 }
 
@@ -136,7 +142,7 @@ void YoudiShareAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    //juce::Logger::writeToLog("Youdi");
+    //juce::Logger::writeToLog("Is Main: "+juce::String(*paramReadIsMain));
 
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't

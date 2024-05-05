@@ -17,12 +17,6 @@ YoudiShareAudioProcessorEditor::YoudiShareAudioProcessorEditor(YoudiShareAudioPr
     , btnIsMain(text::txtIsMain)
     , btnIsMute(text::txtIsMute)
     , sldVolMain(juce::Slider::SliderStyle::Rotary, juce::Slider::TextEntryBoxPosition::TextBoxBelow)
-    , paramIsMain(apvts.getParameter(parameters::isMain.id))
-    , paramIsMute(apvts.getParameter(parameters::isMute.id))
-    , paramVolMain(apvts.getParameter(parameters::volMain.id))
-    , paramReadIsMain(apvts.getRawParameterValue(parameters::isMain.id))
-    , paramReadIsMute(apvts.getRawParameterValue(parameters::isMute.id))
-    , paramReadVolMain(apvts.getRawParameterValue(parameters::volMain.id))
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
