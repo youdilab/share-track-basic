@@ -167,7 +167,7 @@ bool YoudiShareAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* YoudiShareAudioProcessor::createEditor()
 {
-    return new YoudiShareAudioProcessorEditor (*this);
+    return new YoudiShareAudioProcessorEditor(*this,parameters);
 }
 
 //==============================================================================
