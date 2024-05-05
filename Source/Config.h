@@ -39,6 +39,14 @@ namespace constants
 {    
     static const int height{200};
     static const int width{ 320 };
+    
+}
+
+namespace dimensions
+{
+    static const juce::Rectangle btnIsMain{20, 20, 150, 30};
+    static const juce::Rectangle btnIsMute{20, 70, 150, 30};
+    static const juce::Rectangle sldVolMain{20, 50, 140, 140};
 }
 
 namespace text

@@ -51,18 +51,20 @@ void YoudiShareAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    btnIsMain.setBounds(20,20,150,30);
-    btnIsMute.setBounds(20, 70, 150, 30);
-    sldVolMain.setBounds(20, 50, 140, 140);
+    btnIsMain.setBounds(dimensions::btnIsMain);
+    btnIsMute.setBounds(dimensions::btnIsMute);
+    sldVolMain.setBounds(dimensions::sldVolMain);
 }
 
 void YoudiShareAudioProcessorEditor::updateTabLayout()
 {
+    //Main track
     if (btnIsMain.getToggleState())
     {
         btnIsMute.setVisible(true);
         sldVolMain.setVisible(false);
     }
+    //Other track
     else
     {
         btnIsMute.setVisible(false);
@@ -73,4 +75,4 @@ void YoudiShareAudioProcessorEditor::updateTabLayout()
 void YoudiShareAudioProcessorEditor::buttonClicked(juce::Button*)
 {
     updateTabLayout();
-}
+} 
