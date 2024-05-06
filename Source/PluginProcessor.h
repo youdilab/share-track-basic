@@ -94,6 +94,8 @@ private:
     juce::RangedAudioParameter* paramIsMute = nullptr;
     juce::RangedAudioParameter* paramVolMain = nullptr;
 
+    static juce::AudioBuffer<float> sharedMain;
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (YoudiShareAudioProcessor)
 };

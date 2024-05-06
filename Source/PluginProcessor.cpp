@@ -8,8 +8,12 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
 //==============================================================================
+
+//Static Variables
+juce::AudioBuffer<float> YoudiShareAudioProcessor::sharedMain{2,4096};
+
+
 YoudiShareAudioProcessor::YoudiShareAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
@@ -100,8 +104,25 @@ void YoudiShareAudioProcessor::changeProgramName (int index, const juce::String&
 //==============================================================================
 void YoudiShareAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    //Readjusting the size of the shared main buffer to match the host application's buffer.
+    int inputChannelCount = getTotalNumInputChannels();
+    int outputChannelCount = getTotalNumOutputChannels();
+    
+    int sharedBufferChannels;
+
+    if (inputChannelCount > outputChannelCount)
+    {
+        sharedBufferChannels = inputChannelCount;
+    }
+    else
+    {
+        sharedBufferChannels = outputChannelCount;
+    }
+
+    sharedMain.setSize(sharedBufferChannels, samplesPerBlock);
+
+    //Clearing the shared buffer at the start to ensure it is empty.
+    sharedMain.clear();
 }
 
 void YoudiShareAudioProcessor::releaseResources()
@@ -142,7 +163,9 @@ void YoudiShareAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    //juce::Logger::writeToLog("Is Main: "+juce::String(*paramReadIsMain));
+    juce::Logger::writeToLog("Is Main: "+juce::String(*paramReadIsMain));
+    juce::Logger::writeToLog("Is Mute: " + juce::String(*paramReadIsMute));
+    juce::Logger::writeToLog("Volume: " + juce::String(*paramReadVolMain));
 
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
@@ -159,11 +182,35 @@ void YoudiShareAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
 
-        // ..do something to the data...
+    int numSamples = buffer.getNumSamples();
+
+    //Main Track
+    if ((bool)*paramReadIsMain)
+    {
+        for (int channel = 0; channel < totalNumInputChannels; ++channel)
+        {
+            auto* channelData = buffer.getWritePointer(channel);
+
+            //buffer.copyFrom(channel, 0, channelData, numSamples);
+            sharedMain.copyFrom(channel, 0, channelData, numSamples);
+        }
+
+        if ((bool)*paramReadIsMute)
+        {
+            buffer.clear();
+        }
+    }
+    //Other Track
+    else
+    {
+        for (int channel = 0; channel < totalNumInputChannels; ++channel)
+        {
+            auto* channelData = buffer.getWritePointer(channel);
+            auto* channelShared = sharedMain.getReadPointer(channel);
+            
+            buffer.addFrom(channel, 0, channelShared, numSamples);
+        }
     }
 }
 
