@@ -29,7 +29,7 @@ namespace parameters
         const bool defaultValue;
     };
 
-    static const audioParameterFloat volMain{"volMain", "Main Volume", 0, 100, 50};
+    static const audioParameterFloat volMain{"volMain", "Main Volume", 0, 1, 0.5};
 
     static const audioParameterBool isMain{"isMain","Main",false};
     static const audioParameterBool isMute{"isMute", "Mute", false};
