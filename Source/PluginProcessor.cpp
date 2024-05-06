@@ -163,10 +163,6 @@ void YoudiShareAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    juce::Logger::writeToLog("Is Main: "+juce::String(*paramReadIsMain));
-    juce::Logger::writeToLog("Is Mute: " + juce::String(*paramReadIsMute));
-    juce::Logger::writeToLog("Volume: " + juce::String(*paramReadVolMain));
-
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
     // guaranteed to be empty - they may contain garbage).
@@ -191,8 +187,7 @@ void YoudiShareAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
         for (int channel = 0; channel < totalNumInputChannels; ++channel)
         {
             auto* channelData = buffer.getWritePointer(channel);
-
-            //buffer.copyFrom(channel, 0, channelData, numSamples);
+            
             sharedMain.copyFrom(channel, 0, channelData, numSamples);
         }
 
@@ -205,8 +200,7 @@ void YoudiShareAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     else
     {
         for (int channel = 0; channel < totalNumInputChannels; ++channel)
-        {
-            auto* channelData = buffer.getWritePointer(channel);
+        {            
             auto* channelShared = sharedMain.getReadPointer(channel);
             
             buffer.addFrom(channel, 0, channelShared, numSamples);
