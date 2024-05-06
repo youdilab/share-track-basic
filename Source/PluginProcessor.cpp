@@ -203,7 +203,7 @@ void YoudiShareAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
         {            
             auto* channelShared = sharedMain.getReadPointer(channel);
             
-            buffer.addFrom(channel, 0, channelShared, numSamples);
+            buffer.addFrom(channel, 0, channelShared, numSamples,(float)*paramReadVolMain);
         }
     }
 }
